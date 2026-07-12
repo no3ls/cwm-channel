@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title id="pageTitle">Berita | CWM CHANNEL</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <!-- CSS situs (sama seperti index.html) -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS khusus halaman detail berita, mengikuti token warna & tipografi css/style.css -->
+    <style>
+        .detail-section{
+            padding-top: 35px;
+            margin-bottom: 70px;
+        }
+        .detail-wrap{
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .detail-back{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #0b3d91;
+            margin-bottom: 22px;
+            transition: .3s;
+        }
+        .detail-back:hover{ color: #1d7dff; }
+        .detail-card{
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.08);
+            animation: fadeUp .7s ease;
+        }
+        .detail-title{
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 1.35;
+            color: #222;
+            margin: 14px 0 15px;
+        }
+        .detail-meta{
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eef1f6;
+        }
+        .detail-image{
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .detail-body p{
+            color: #555;
+            line-height: 1.9;
+            font-size: 16px;
+            margin-bottom: 22px;
+        }
+        .detail-body p:last-child{ margin-bottom: 0; }
+        .detail-notfound{
+            text-align: center;
+            padding: 70px 20px;
+        }
+        .detail-notfound h2{
+            font-family: 'Montserrat', sans-serif;
+            color: #0b3d91;
+            margin-bottom: 12px;
+        }
+        .detail-notfound p{
+            color: #666;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 768px){
+            .detail-card{ padding: 25px; }
+            .detail-title{ font-size: 24px; }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- ================================================= -->
+<!-- HEADER (sama seperti index.html) -->
+<!-- ================================================= -->
+
+<header class="header">
+    <div class="container header-container">
+
+        <div class="brand">
+            <a href="index.html">
+                CWM CHANNEL
+            </a>
+        </div>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profil.html">Profil</a></li>
+                <li><a class="active" href="berita.html">Berita</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="pengaduan.html">Pengaduan</a></li>
+            </ul>
+        </nav>
+
+    </div>
+</header>
+
+<!-- ================================================= -->
+<!-- ISI BERITA (diisi otomatis lewat JavaScript) -->
+<!-- ================================================= -->
+
+<section class="detail-section">
+    <div class="container detail-wrap" id="detailWrap">
+        <!-- konten dimasukkan oleh script di bawah -->
+    </div>
+</section>
+
+<!-- ================================================= -->
+<!-- FOOTER (sama seperti index.html) -->
+<!-- ================================================= -->
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <h3 class="footer-company">
+                PT CENDRAWASIH WIPUTRA MANDIRI
+            </h3>
+            <p class="footer-address">
+                Jl. D. Maninjau No.19, Rufei, Distrik Sorong Barat,
+                <br>
+                Kota Sorong, Papua Barat Daya 98411, Indonesia
+            </p>
+            <div class="footer-social">
+                <h4>Ikuti Kami</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/cwm.channel" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/cwmchannel" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/results?search_query=cwm+channel" target="_blank" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 PT Cendrawasih Wiputra Mandiri | All Rights Reserved.
+        </div>
+    </div>
+</footer>
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script src="js/berita-data.js"></script>
+<script>
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'), 10);
+        const wrap = document.getElementById('detailWrap');
+        const berita = beritaData.find(b => b.id === id);
+
+        if (!berita) {
+            wrap.innerHTML = `
+                <div class="detail-card detail-notfound">
+                    <h2>Berita tidak ditemukan</h2>
+                    <p>Berita yang kamu cari mungkin sudah dipindahkan atau tidak tersedia.</p>
+                    <a class="btn-news" href="index.html">Kembali ke Beranda</a>
+                </div>
+            `;
+            return;
+        }
+
+        document.getElementById('pageTitle').textContent = berita.judul + ' | CWM CHANNEL';
+
+        wrap.innerHTML = `
+            <a class="detail-back" href="index.html"><i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda</a>
+            <div class="detail-card">
+                <span class="category">${berita.kategori}</span>
+                <h1 class="detail-title">${berita.judul}</h1>
+                <div class="detail-meta">Oleh ${berita.penulis} &middot; ${berita.tanggal}</div>
+                <img class="detail-image" src="${berita.gambar}" alt="${berita.judul}">
+                <div class="detail-body">
+                    ${berita.isi.map(p => `<p>${p}</p>`).join('')}
+                </div>
+            </div>
+        `;
+    })();
+</script>
+
+<script src="js/script.js"></script>
+<script src="js/weather.js"></script>
+
+</body>
+</html>
