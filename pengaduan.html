@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengaduan - CWM Channel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+<style>
+  :root{
+    --navy: #0b3d91;
+    --navy-deep: #072a66;
+    --steel: #1856c9;
+    --amber: #0b3d91;
+    --amber-deep: #072a66;
+    --cream: #f8f9fc;
+    --paper: #FFFFFF;
+    --ink: #1C1C1C;
+    --muted: #6B7280;
+    --line: #E3DFD4;
+    --radius: 10px;
+    --shadow: 0 8px 24px rgba(11,61,145,0.08);
+    --font-display: "Montserrat", sans-serif;
+    --font-body: "Poppins", sans-serif;
+    --font-mono: "Poppins", sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ink);
+    line-height:1.55;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; margin:0; padding:0; }
+  .container{ width:100%; max-width:1160px; margin:0 auto; padding:0 24px; }
+  .hidden{ display:none !important; }
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:2px; }
+  button{ font-family:inherit; }
+
+  /* ============ SPLASH ============ */
+  #splash-screen{
+    position:fixed; inset:0; z-index:200;
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+    display:flex; align-items:center; justify-content:center;
+    transition: opacity .5s ease;
+    cursor:pointer;
+  }
+  #splash-screen.hide{ opacity:0; pointer-events:none; }
+  .splash-content{ text-align:center; color:#fff; }
+  .splash-content h1{
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin:0 0 6px;
+    font-weight:500;
+    color: rgba(255,255,255,0.75);
+  }
+  .splash-content h2{
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    margin:0 0 6px;
+    font-weight:500;
+    color: rgba(255,255,255,0.75);
+  }
+  .splash-content h3{
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    margin:14px 0 0;
+    font-weight:700;
+    letter-spacing:1px;
+    color: #cfe0ff;
+  }
+  .splash-content .dots{ margin-top:22px; display:flex; gap:8px; justify-content:center; }
+  .splash-content .dots span{
+    width:8px; height:8px; border-radius:50%; background: #cfe0ff;
+    animation: dot-pulse 1.2s ease-in-out infinite;
+  }
+  .splash-content .dots span:nth-child(2){ animation-delay:.15s; }
+  .splash-content .dots span:nth-child(3){ animation-delay:.3s; }
+  @keyframes dot-pulse{ 0%,80%,100%{ opacity:.25; transform:scale(.8);} 40%{ opacity:1; transform:scale(1);} }
+  @media (prefers-reduced-motion: reduce){
+    #splash-screen{ display:none; }
+    .splash-content .dots span{ animation:none; }
+  }
+
+  /* ============ HEADER ============ */
+  .header{ background: var(--navy); position:sticky; top:0; z-index:50; box-shadow:0 2px 12px rgba(0,0,0,0.15); }
+  .header-container{ display:flex; align-items:center; justify-content:space-between; padding-top:16px; padding-bottom:16px; position:relative; }
+  .brand a{ font-family: var(--font-display); font-weight:700; font-size:1.4rem; color:#fff; letter-spacing:.5px; }
+  .navbar ul{ display:flex; gap:8px; flex-wrap:wrap; }
+  .navbar a{ display:inline-block; padding:8px 16px; border-radius:999px; font-weight:600; font-size:.92rem; color:rgba(255,255,255,0.75); transition: background .2s ease, color .2s ease; }
+  .navbar a:hover{ color:#fff; background:rgba(255,255,255,0.08); }
+  .navbar a.active{ color: #fff; background: var(--amber); }
+  .nav-toggle{ display:none; background:none; border:1px solid rgba(255,255,255,0.3); border-radius:8px; width:42px; height:38px; color:#fff; font-size:1.15rem; cursor:pointer; }
+
+  /* ============ HERO ============ */
+  .layanan-hero{ background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%); color:#fff; padding:64px 0 72px; text-align:center; }
+  .hero-wrapper{ max-width:640px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family: var(--font-mono); font-size:.75rem; letter-spacing:1px; text-transform:uppercase;
+    color: #fff; background: var(--amber);
+    padding:6px 16px; border-radius:999px; margin-bottom:22px; font-weight:600;
+  }
+  .layanan-hero h1{ font-family: var(--font-display); font-weight:600; font-size:clamp(2rem,4.5vw,2.9rem); margin:0 0 16px; }
+  .layanan-hero p{ color: rgba(255,255,255,0.75); margin:0 0 30px; font-size:1rem; }
+  .hero-button{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--amber); color: #fff; font-weight:700;
+    padding:13px 30px; border-radius:999px; font-size:.95rem;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .hero-button:hover{ background: var(--amber-deep); transform: translateY(-2px); }
+
+  /* ============ SECTION TITLE (reusable) ============ */
+  .section-title{ text-align:center; max-width:560px; margin:0 auto 44px; }
+  .section-title span{
+    display:inline-block; font-family: var(--font-mono); font-size:.75rem; letter-spacing:2px; text-transform:uppercase;
+    color: var(--amber-deep); margin-bottom:10px; font-weight:600;
+  }
+  .section-title h2{ font-family: var(--font-display); font-size:clamp(1.6rem,3vw,2rem); margin:0 0 12px; color: var(--navy); }
+  .section-title p{ color: var(--muted); font-size:.95rem; margin:0; }
+
+  /* ============ LAYANAN CARDS ============ */
+  .layanan-section{ padding:72px 0; }
+  .layanan-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:28px; max-width:900px; margin:0 auto; }
+  .service-card{
+    background:#fff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding:34px 30px; text-align:center; display:flex; flex-direction:column; align-items:center;
+    border:1px solid transparent; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .service-card:hover{ transform: translateY(-5px); box-shadow:0 16px 34px rgba(11,61,145,0.14); border-color: rgba(11,61,145,0.4); }
+  .service-card i{
+    width:64px; height:64px; border-radius:50%; background: rgba(11,61,145,0.15);
+    color: var(--amber-deep); display:flex; align-items:center; justify-content:center;
+    font-size:1.5rem; margin-bottom:18px;
+  }
+  .service-card h3{ font-family: var(--font-display); font-size:1.25rem; margin:0 0 10px; color: var(--navy); }
+  .service-card p{ color: var(--muted); font-size:.9rem; margin:0 0 22px; }
+  .service-card ul{ text-align:left; width:100%; margin:0 0 22px; display:grid; grid-template-columns:1fr 1fr; gap:6px 10px; }
+  .service-card ul li{ font-size:.86rem; color: var(--ink); display:flex; align-items:center; gap:6px; }
+  .service-card ul li::before{ content:"\f00c"; font-family:"Font Awesome 6 Free"; font-weight:900; color: var(--amber-deep); font-size:.7rem; }
+  .service-card button{
+    margin-top:auto; width:100%; border:none; background: var(--navy); color:#fff; font-weight:700;
+    padding:12px 20px; border-radius:999px; cursor:pointer; font-size:.9rem; transition: background .2s ease;
+  }
+  .service-card button:hover{ background: var(--steel); }
+
+  /* ============ URGENSI BADGE INFO ============ */
+  .urgency-note{
+    display:flex; gap:10px; align-items:flex-start; background: rgba(11,61,145,0.08);
+    border:1px solid rgba(11,61,145,0.25); border-radius:8px; padding:14px 16px; margin-top:6px;
+  }
+  .urgency-note i{ color: var(--amber-deep); margin-top:2px; }
+  .urgency-note p{ margin:0; font-size:.82rem; color: var(--navy); }
+
+  /* ============ FORM SECTIONS ============ */
+  .form-section{ padding:72px 0; background:#fff; border-top:1px solid var(--line); }
+  .form-card{ background: var(--cream); border:1px solid var(--line); border-radius: var(--radius); padding:28px 30px; margin-bottom:22px; }
+  .form-card h3{ font-family: var(--font-display); font-size:1.1rem; margin:0 0 20px; display:flex; align-items:center; gap:10px; color: var(--navy); }
+  .form-card h3 i{ color: var(--amber-deep); }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px 22px; }
+  .input-group{ display:flex; flex-direction:column; gap:6px; }
+  .input-group.full{ grid-column:1/-1; }
+  .input-group label{ font-size:.85rem; font-weight:600; color: var(--navy); }
+  .input-group label span{ color:#C0392B; }
+  .input-group input, .input-group textarea, .input-group select{
+    border:1px solid var(--line); border-radius:8px; padding:11px 14px; font-family: var(--font-body);
+    font-size:.92rem; background:#fff; color: var(--ink); transition: border-color .2s ease;
+  }
+  .input-group input:focus, .input-group textarea:focus, .input-group select:focus{ border-color: var(--amber); }
+  .input-group input[readonly]{ background:#F0EEE7; color: var(--muted); }
+  .input-group small{ font-size:.76rem; color: var(--muted); }
+  .checkbox-group{ display:flex; gap:12px; align-items:flex-start; }
+  .checkbox-group input{ margin-top:4px; width:18px; height:18px; accent-color: var(--amber-deep); flex:0 0 auto; }
+  .checkbox-group label{ font-size:.86rem; color: var(--muted); line-height:1.5; }
+  .info-box{ display:flex; gap:12px; align-items:flex-start; background: rgba(11,61,145,0.12); border:1px solid rgba(11,61,145,0.4); border-radius:8px; padding:16px 18px; }
+  .info-box i{ color: var(--amber-deep); margin-top:2px; }
+  .info-box p{ margin:0; font-size:.86rem; color: var(--navy); }
+  .submit-area{ text-align:center; margin-top:8px; }
+  .submit-btn{
+    display:inline-flex; align-items:center; gap:10px; border:none; background: var(--amber); color: #fff;
+    font-weight:700; padding:14px 34px; border-radius:999px; cursor:pointer; font-size:.95rem; transition: background .2s ease, transform .2s ease;
+  }
+  .submit-btn:hover{ background: var(--amber-deep); transform: translateY(-2px); }
+  .field-error{ font-size:.76rem; color:#C0392B; display:none; }
+  .input-group.error input, .input-group.error textarea, .input-group.error select{ border-color:#C0392B; }
+  .input-group.error .field-error{ display:block; }
+
+  /* ============ MODAL ============ */
+  .modal{
+    position:fixed; inset:0; background: rgba(7,42,102,0.6); display:none; align-items:flex-start; justify-content:center;
+    padding:40px 20px; overflow-y:auto; z-index:100;
+  }
+  .modal.open{ display:flex; }
+  .modal-content{ background:#fff; max-width:760px; width:100%; border-radius: var(--radius); padding:34px 36px 30px; position:relative; box-shadow:0 30px 60px rgba(0,0,0,0.3); }
+  .close-modal{
+    position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    background: var(--cream); cursor:pointer; font-size:1rem; color: var(--navy);
+  }
+  .modal-header{ text-align:center; margin-bottom:26px; }
+  .modal-icon{
+    width:56px; height:56px; border-radius:50%; background: rgba(11,61,145,0.15); color: var(--amber-deep);
+    display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin:0 auto 14px;
+  }
+  .modal-header span{ font-family: var(--font-mono); font-size:.75rem; letter-spacing:1.5px; text-transform:uppercase; color: var(--amber-deep); font-weight:600; }
+  .modal-header h2{ font-family: var(--font-display); font-size:1.5rem; margin:8px 0 10px; color: var(--navy); }
+  .modal-header p{ color: var(--muted); font-size:.88rem; margin:0; max-width:440px; margin:0 auto; }
+  .service-option-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-bottom:26px; }
+  .service-option input{ position:absolute; opacity:0; }
+  .option-card{
+    border:1.5px solid var(--line); border-radius:10px; padding:18px 12px; text-align:center; cursor:pointer;
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .option-card i{ font-size:1.2rem; color: var(--amber-deep); margin-bottom:10px; display:block; }
+  .option-card h4{ font-size:.85rem; margin:0 0 6px; color: var(--navy); }
+  .option-card p{ font-size:.74rem; color: var(--muted); margin:0; }
+  .service-option input:checked + .option-card{ border-color: var(--amber); background: rgba(11,61,145,0.1); }
+  .modal-footer{ text-align:center; }
+  .continue-btn{
+    display:inline-flex; align-items:center; gap:8px; border:none; background: var(--navy); color:#fff; font-weight:700;
+    padding:13px 30px; border-radius:999px; cursor:pointer; font-size:.9rem; transition: background .2s ease;
+  }
+  .continue-btn:hover{ background: var(--steel); }
+  .continue-btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .modal-note{ font-size:.78rem; color:#C0392B; margin-top:12px; display:none; }
+  .modal-note.show{ display:block; }
+
+  /* ============ SUCCESS ============ */
+  .success-section{ padding:72px 0; background: var(--cream); }
+  .success-card{ max-width:560px; margin:0 auto; background:#fff; border-radius: var(--radius); box-shadow: var(--shadow); padding:44px 40px; text-align:center; }
+  .success-icon{ font-size:3rem; color:#2E9E5B; margin-bottom:14px; }
+  .success-card h2{ font-family: var(--font-display); font-size:1.7rem; margin:0 0 6px; color: var(--navy); }
+  .success-card h3{ font-size:1rem; font-weight:600; color: var(--muted); margin:0 0 18px; }
+  .success-card > p{ color: var(--muted); font-size:.92rem; margin:0 0 22px; }
+  .success-message{ background: var(--cream); border-radius:8px; padding:18px 20px; text-align:left; margin-bottom:26px; }
+  .success-message h4{ font-family: var(--font-display); font-size:.98rem; margin:0 0 8px; color: var(--navy); }
+  .success-message p{ font-size:.86rem; color: var(--muted); margin:0; }
+  .success-button{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .success-button a{
+    display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; font-weight:700; font-size:.88rem;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .success-button a.primary{ background: var(--amber); color: #fff; }
+  .success-button a.primary:hover{ background: var(--amber-deep); transform: translateY(-2px); }
+  .success-button a.ghost{ background: var(--cream); color: var(--navy); border:1px solid var(--line); }
+  .success-button a.ghost:hover{ border-color: var(--amber); }
+
+  /* ============ STATUS ============ */
+  .status-section{ padding:72px 0; }
+  .status-card{ max-width:720px; margin:0 auto; background:#fff; border-radius: var(--radius); box-shadow: var(--shadow); padding:32px 34px; }
+  .status-header{ display:flex; align-items:center; gap:16px; margin-bottom:32px; }
+  .status-icon{ width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex:0 0 auto; }
+  .status-icon.waiting{ background: rgba(11,61,145,0.15); color: var(--amber-deep); }
+  .status-header h3{ font-family: var(--font-display); font-size:1.1rem; margin:0 0 4px; color: var(--navy); }
+  .status-header p{ margin:0; font-size:.85rem; color: var(--muted); }
+  .status-progress{ display:flex; align-items:center; }
+  .progress-item{ display:flex; flex-direction:column; align-items:center; gap:8px; flex:0 0 auto; width:76px; }
+  .progress-item .circle{
+    width:34px; height:34px; border-radius:50%; background: var(--cream); border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-family: var(--font-mono); font-weight:600; font-size:.85rem; color: var(--muted);
+  }
+  .progress-item.active .circle{ background: var(--amber); border-color: var(--amber); color: #fff; }
+  .progress-item span{ font-size:.72rem; text-align:center; color: var(--muted); }
+  .progress-item.active span{ color: var(--navy); font-weight:600; }
+  .status-progress .line{ flex:1; height:2px; background: var(--line); margin-bottom:26px; }
+
+  /* ============ CTA ADMIN ============ */
+  .cta-admin{ padding:0 0 24px; }
+  .cta-admin-box{
+    background: var(--navy); color:#fff; border-radius: var(--radius); padding:34px 38px;
+    display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  }
+  .cta-admin-box h2{ font-family: var(--font-display); font-size:1.3rem; margin:0 0 6px; }
+  .cta-admin-box p{ margin:0; color: rgba(255,255,255,0.7); font-size:.9rem; }
+  .wa-admin{
+    display:inline-flex; align-items:center; gap:10px; background:#25D366; color:#fff; font-weight:700;
+    padding:13px 26px; border-radius:999px; font-size:.9rem; transition: background .2s ease, transform .2s ease;
+  }
+  .wa-admin:hover{ background:#1EBE5A; transform: translateY(-2px); }
+
+  /* ============ CTA GENERAL ============ */
+  .cta{ background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%); color:#fff; text-align:center; padding:64px 0; margin-top:24px; }
+  .cta h2{ font-family: var(--font-display); font-size:clamp(1.5rem,3vw,2.1rem); margin:0 0 12px; }
+  .cta p{ color: rgba(255,255,255,0.7); max-width:480px; margin:0 auto 26px; font-size:.95rem; }
+  .cta a{
+    display:inline-flex; align-items:center; gap:8px; background: var(--amber); color: #fff; font-weight:700;
+    padding:13px 32px; border-radius:999px; font-size:.92rem; transition: background .2s ease, transform .2s ease;
+  }
+  .cta a:hover{ background: var(--amber-deep); transform: translateY(-2px); }
+
+  /* ============ FOOTER ============ */
+  .footer{ background: var(--navy-deep); color: rgba(255,255,255,0.65); padding:40px 0; }
+  .footer-company{ font-family: var(--font-display); color:#fff; font-size:1.05rem; margin:0 0 8px; }
+  .footer-address{ font-size:.86rem; margin:0; max-width:420px; }
+  .footer-bottom{ margin-top:24px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); font-size:.78rem; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 860px){
+    .layanan-grid{ grid-template-columns:1fr; }
+    .form-grid{ grid-template-columns:1fr; }
+    .service-option-grid{ grid-template-columns:repeat(2, 1fr); }
+    .cta-admin-box{ flex-direction:column; text-align:center; }
+  }
+  @media (max-width: 680px){
+    .navbar{ position:absolute; top:100%; left:0; right:0; background: var(--navy); display:none; flex-direction:column; padding:8px 24px 20px; }
+    .navbar.open{ display:flex; }
+    .navbar ul{ flex-direction:column; gap:4px; }
+    .navbar a{ display:block; }
+    .nav-toggle{ display:block; }
+    .service-option-grid{ grid-template-columns:1fr 1fr; }
+    .status-progress{ overflow-x:auto; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============ SPLASH SCREEN ============ -->
+<div id="splash-screen">
+  <div class="splash-content">
+    <h1>Selamat Datang</h1>
+    <h2>di Layanan Pengaduan</h2>
+    <h3>CWM CHANNEL</h3>
+    <div class="dots"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="container header-container">
+    <div class="brand"><a href="index.html">CWM CHANNEL</a></div>
+    <nav class="navbar" id="navbar">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="profil.html">Profil</a></li>
+        <li><a href="berita.html">Berita</a></li>
+        <li><a href="live.html">Live TV</a></li>
+        <li><a href="layanan.html">Layanan</a></li>
+        <li><a class="active" href="pengaduan.html">Pengaduan</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi"><i class="fa-solid fa-bars"></i></button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="layanan-hero">
+  <div class="container hero-wrapper">
+    <span class="hero-badge"><i class="fa-solid fa-headset"></i> Portal Pengaduan Pelanggan</span>
+    <h1>Pengaduan CWM Channel</h1>
+    <p>Alami gangguan sinyal, parabola, kabel korslet, atau kendala setting siaran? Sampaikan keluhan Anda melalui formulir di bawah, tim teknis kami akan segera menindaklanjuti.</p>
+    <a href="#pengaduan-card" class="hero-button"><i class="fa-solid fa-arrow-down"></i> Ajukan Pengaduan</a>
+  </div>
+</section>
+
+<!-- ============ PILIH JENIS PENGADUAN ============ -->
+<section id="pengaduan-card" class="layanan-section">
+  <div class="container">
+    <div class="section-title">
+      <span>Pengaduan Teknis</span>
+      <h2>Sampaikan Kendala Anda</h2>
+      <p>Pilih jenis gangguan yang Anda alami agar tim teknis dapat menindaklanjuti dengan tepat.</p>
+    </div>
+
+    <div class="layanan-grid">
+
+      <div class="service-card">
+        <i class="fa-solid fa-satellite-dish"></i>
+        <h3>Gangguan Teknis</h3>
+        <ul>
+          <li>Sinyal Hilang</li>
+          <li>Parabola Bergeser</li>
+          <li>Kabel Korslet</li>
+          <li>Setting Siaran</li>
+          <li>Kerusakan STB/Decoder</li>
+          <li>Lain-lain</li>
+        </ul>
+        <button id="btnPengaduan" type="button">Ajukan Pengaduan</button>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-magnifying-glass-chart"></i>
+        <h3>Cek Status Pengaduan</h3>
+        <p>Sudah pernah melapor sebelumnya? Pantau perkembangan penanganan pengaduan Anda di sini.</p>
+        <button id="btnCekStatus" type="button">Cek Status</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ POPUP JENIS PENGADUAN ============ -->
+<div id="popupPengaduan" class="modal">
+  <div class="modal-content">
+    <button class="close-modal" id="closeModal" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+
+    <div class="modal-header">
+      <div class="modal-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <span>Jenis Pengaduan</span>
+      <h2>Pilih Jenis Gangguan</h2>
+      <p>Silakan pilih jenis gangguan yang Anda alami, lalu klik tombol <strong>Lanjutkan</strong>.</p>
+    </div>
+
+    <div class="service-option-grid" id="serviceOptionGrid">
+      <label class="service-option">
+        <input type="radio" name="pengaduan" value="Gangguan Sinyal / Parabola">
+        <div class="option-card"><i class="fa-solid fa-satellite-dish"></i><h4>Sinyal / Parabola</h4><p>Sinyal hilang, buram, parabola bergeser.</p></div>
+      </label>
+      <label class="service-option">
+        <input type="radio" name="pengaduan" value="Korsleting / Kerusakan Kabel">
+        <div class="option-card"><i class="fa-solid fa-bolt"></i><h4>Korsleting Kabel</h4><p>Kabel putus, korslet, atau terbakar.</p></div>
+      </label>
+      <label class="service-option">
+        <input type="radio" name="pengaduan" value="Setting Siaran / Channel">
+        <div class="option-card"><i class="fa-solid fa-tv"></i><h4>Setting Siaran</h4><p>Channel acak, hilang, atau perlu scan ulang.</p></div>
+      </label>
+      <label class="service-option">
+        <input type="radio" name="pengaduan" value="Kerusakan Perangkat (STB/Decoder)">
+        <div class="option-card"><i class="fa-solid fa-microchip"></i><h4>Kerusakan Perangkat</h4><p>STB/decoder tidak menyala atau error.</p></div>
+      </label>
+      <label class="service-option">
+        <input type="radio" name="pengaduan" value="Pemasangan / Pemindahan Alat">
+        <div class="option-card"><i class="fa-solid fa-screwdriver-wrench"></i><h4>Pemasangan Ulang</h4><p>Pemindahan lokasi atau pemasangan alat.</p></div>
+      </label>
+      <label class="service-option">
+        <input type="radio" name="pengaduan" value="Lainnya">
+        <div class="option-card"><i class="fa-solid fa-ellipsis"></i><h4>Lainnya</h4><p>Kendala lain seputar layanan.</p></div>
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button id="btnLanjutPengaduan" class="continue-btn" type="button"><i class="fa-solid fa-arrow-right"></i> Lanjutkan</button>
+      <p class="modal-note" id="modalNote">Silakan pilih salah satu jenis pengaduan terlebih dahulu.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FORM PENGADUAN ============ -->
+<section id="formPengaduan" class="form-section hidden">
+  <div class="container">
+    <div class="section-title">
+      <span>Formulir Pengaduan</span>
+      <h2>Form Pengaduan Gangguan Layanan</h2>
+      <p>Lengkapi data berikut agar tim teknis CWM Channel dapat segera menindaklanjuti keluhan Anda.</p>
+    </div>
+
+    <form id="pengaduanForm" novalidate>
+
+      <div class="form-card">
+        <h3><i class="fa-solid fa-user"></i> Data Pelapor</h3>
+        <div class="form-grid">
+          <div class="input-group" data-field="namaPelapor">
+            <label for="namaPelapor">Nama Lengkap <span>*</span></label>
+            <input type="text" id="namaPelapor" placeholder="Masukkan nama lengkap" required>
+            <small class="field-error">Nama lengkap wajib diisi.</small>
+          </div>
+          <div class="input-group">
+            <label for="idPelanggan">Nomor Pelanggan (jika ada)</label>
+            <input type="text" id="idPelanggan" placeholder="Contoh: CWM-00123">
+          </div>
+          <div class="input-group" data-field="waPelapor">
+            <label for="waPelapor">Nomor HP / WhatsApp Aktif <span>*</span></label>
+            <input type="tel" id="waPelapor" placeholder="08xxxxxxxxxx" required>
+            <small class="field-error">Masukkan nomor WhatsApp yang valid.</small>
+          </div>
+          <div class="input-group" data-field="emailPelapor">
+            <label for="emailPelapor">Email Aktif <span>*</span></label>
+            <input type="email" id="emailPelapor" placeholder="nama@email.com" required>
+            <small class="field-error">Masukkan alamat email yang valid.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3><i class="fa-solid fa-location-dot"></i> Lokasi Gangguan</h3>
+        <div class="form-grid">
+          <div class="input-group full" data-field="alamatGangguan">
+            <label for="alamatGangguan">Alamat Lengkap Lokasi Gangguan <span>*</span></label>
+            <input type="text" id="alamatGangguan" placeholder="Contoh: Jl. Basuki Rahmat No.10, RT/RW, Kelurahan" required>
+            <small class="field-error">Alamat lokasi gangguan wajib diisi.</small>
+          </div>
+          <div class="input-group">
+            <label for="shareloc">Link Share Location Google Maps</label>
+            <input type="url" id="shareloc" placeholder="https://maps.app.goo.gl/...">
+            <small>Membantu teknisi menemukan lokasi lebih cepat (opsional).</small>
+          </div>
+          <div class="input-group">
+            <label for="patokan">Patokan Lokasi</label>
+            <input type="text" id="patokan" placeholder="Contoh: dekat masjid, sebelah toko...">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3><i class="fa-solid fa-triangle-exclamation"></i> Detail Gangguan</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="jenisPengaduan">Jenis Pengaduan</label>
+            <input type="text" id="jenisPengaduan" readonly>
+          </div>
+          <div class="input-group" data-field="waktuGangguan">
+            <label for="waktuGangguan">Sejak Kapan Gangguan Terjadi <span>*</span></label>
+            <input type="datetime-local" id="waktuGangguan" required>
+            <small class="field-error">Waktu mulai gangguan wajib diisi.</small>
+          </div>
+          <div class="input-group" data-field="tingkatUrgensi">
+            <label for="tingkatUrgensi">Tingkat Urgensi <span>*</span></label>
+            <select id="tingkatUrgensi" required>
+              <option value="">Pilih tingkat urgensi</option>
+              <option value="Ringan">Ringan - masih bisa menonton, sesekali terganggu</option>
+              <option value="Sedang">Sedang - sering terganggu / kualitas menurun</option>
+              <option value="Berat">Berat - siaran tidak bisa dinikmati sama sekali</option>
+              <option value="Darurat">Darurat - risiko keselamatan (kabel terbakar/korslet)</option>
+            </select>
+            <small class="field-error">Silakan pilih tingkat urgensi.</small>
+          </div>
+          <div class="input-group full" data-field="deskripsiGangguan">
+            <label for="deskripsiGangguan">Deskripsi Keluhan <span>*</span></label>
+            <textarea id="deskripsiGangguan" rows="5" placeholder="Jelaskan secara rinci kendala yang dialami, misalnya: sinyal hilang sejak semalam, kabel dekat rooftop terlihat terkelupas, dsb." required></textarea>
+            <small class="field-error">Deskripsi keluhan wajib diisi.</small>
+          </div>
+        </div>
+        <div class="urgency-note">
+          <i class="fa-solid fa-circle-info"></i>
+          <p>Untuk pengaduan dengan tingkat urgensi <strong>Darurat</strong> (misalnya korsleting atau risiko kebakaran), segera hubungi Admin melalui WhatsApp di bawah selain mengirim formulir ini.</p>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3><i class="fa-solid fa-paperclip"></i> Lampiran Foto/Video (Opsional)</h3>
+        <div class="form-grid">
+          <div class="input-group full">
+            <label for="lampiran">Foto/Video Kondisi Kabel, Parabola, atau Perangkat</label>
+            <input type="file" id="lampiran" accept="image/*,video/*">
+            <small>Lampiran membantu teknisi memperkirakan kondisi sebelum kunjungan.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="checkbox-group">
+          <input type="checkbox" id="agree" required>
+          <label for="agree">Saya menyatakan bahwa data dan keluhan yang saya sampaikan adalah benar. Saya bersedia dihubungi oleh Admin/Teknisi CWM Channel melalui WhatsApp maupun Email untuk proses tindak lanjut pengaduan.</label>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="info-box">
+          <i class="fa-solid fa-circle-info"></i>
+          <p>Setelah formulir dikirim, Admin CWM Channel akan menghubungi Anda melalui WhatsApp untuk konfirmasi keluhan dan penjadwalan kunjungan teknisi.</p>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Kirim Pengaduan</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============ SUCCESS ============ -->
+<section id="successSection" class="success-section hidden">
+  <div class="container">
+    <div class="success-card">
+      <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <h2>Terima Kasih</h2>
+      <h3 id="successSubtitle">Pengaduan Anda Berhasil Dikirim</h3>
+      <p id="successText">Terima kasih telah melaporkan kendala Anda. Data pengaduan telah kami terima dan akan segera ditindaklanjuti oleh tim teknis CWM Channel.</p>
+      <div class="success-message">
+        <h4>Langkah Selanjutnya</h4>
+        <p>Admin CWM Channel akan menghubungi Bapak/Ibu melalui WhatsApp untuk konfirmasi keluhan, estimasi penanganan, hingga penjadwalan kunjungan teknisi ke lokasi.</p>
+      </div>
+      <div class="success-button">
+        <a href="#statusSection" class="primary" id="btnLihatStatus"><i class="fa-solid fa-list-check"></i> Lihat Status</a>
+        <a href="index.html" class="ghost"><i class="fa-solid fa-house"></i> Kembali ke Beranda</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATUS PENGADUAN ============ -->
+<section id="statusSection" class="status-section hidden">
+  <div class="container">
+    <div class="section-title">
+      <span>Status</span>
+      <h2>Status Pengaduan Anda</h2>
+      <p>Pantau proses penanganan pengaduan Anda.</p>
+    </div>
+
+    <div class="status-card">
+      <div class="status-header">
+        <div class="status-icon waiting"><i class="fa-solid fa-clock"></i></div>
+        <div>
+          <h3>Menunggu Verifikasi</h3>
+          <p>Pengaduan Anda sudah kami terima dan sedang menunggu antrian verifikasi Admin.</p>
+        </div>
+      </div>
+      <div class="status-progress">
+        <div class="progress-item active"><div class="circle">1</div><span>Pengaduan Dikirim</span></div>
+        <div class="line"></div>
+        <div class="progress-item"><div class="circle">2</div><span>Verifikasi</span></div>
+        <div class="line"></div>
+        <div class="progress-item"><div class="circle">3</div><span>Kunjungan Teknisi</span></div>
+        <div class="line"></div>
+        <div class="progress-item"><div class="circle">4</div><span>Selesai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ADMIN ============ -->
+<section class="cta-admin">
+  <div class="container">
+    <div class="cta-admin-box">
+      <div>
+        <h2>Gangguan Mendesak?</h2>
+        <p>Untuk kondisi darurat seperti korsleting kabel, segera hubungi Admin CWM Channel melalui WhatsApp.</p>
+      </div>
+      <a href="#" class="wa-admin" id="waAdminBtn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Hubungi Admin</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA GENERAL ============ -->
+<section class="cta">
+  <div class="container">
+    <h2>Butuh Bantuan Teknis Lainnya?</h2>
+    <p>Tim kami siap membantu menyelesaikan kendala layanan Anda secepat mungkin.</p>
+    <a href="#" id="ctaWaBtn" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Hubungi Kami</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <h3 class="footer-company">PT CENDRAWASIH WIPUTRA MANDIRI</h3>
+    <p class="footer-address">Jl. D. Maninjau No.19, Kota Sorong, Papua Barat Daya</p>
+    <div class="footer-bottom">&copy; 2026 PT Cendrawasih Wiputra Mandiri</div>
+  </div>
+</footer>
+
+<script>
+  /* ============ GANTI NOMOR WHATSAPP ADMIN DI SINI ============ */
+  const ADMIN_WA_NUMBER = "6281354156872"; // format: 62xxxxxxxxxx (tanpa + atau 0 di depan)
+
+  document.getElementById("waAdminBtn").href =
+    `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent("Halo Admin CWM Channel, saya ingin melaporkan gangguan pada layanan saya.")}`;
+  document.getElementById("ctaWaBtn").href =
+    `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent("Halo Admin CWM Channel, saya membutuhkan bantuan teknis.")}`;
+
+  /* ============ SPLASH SCREEN ============ */
+  const splash = document.getElementById("splash-screen");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function hideSplash(){
+    splash.classList.add("hide");
+    document.body.style.overflow = "";
+    setTimeout(() => { splash.style.display = "none"; }, 500);
+  }
+  if (prefersReduced){
+    splash.style.display = "none";
+  } else {
+    document.body.style.overflow = "hidden";
+    window.addEventListener("load", () => { setTimeout(hideSplash, 1400); });
+    splash.addEventListener("click", hideSplash);
+  }
+
+  /* ============ NAV TOGGLE ============ */
+  document.getElementById("navToggle").addEventListener("click", () => {
+    document.getElementById("navbar").classList.toggle("open");
+  });
+
+  /* ============ CEK STATUS LANGSUNG ============ */
+  document.getElementById("btnCekStatus").addEventListener("click", () => {
+    const statusSection = document.getElementById("statusSection");
+    statusSection.classList.remove("hidden");
+    statusSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  /* ============ MODAL JENIS PENGADUAN ============ */
+  const popup = document.getElementById("popupPengaduan");
+  const modalNote = document.getElementById("modalNote");
+  let selectedPengaduan = null;
+
+  document.getElementById("btnPengaduan").addEventListener("click", () => {
+    popup.classList.add("open");
+    document.body.style.overflow = "hidden";
+  });
+
+  function closePopup(){
+    popup.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  document.getElementById("closeModal").addEventListener("click", closePopup);
+  popup.addEventListener("click", (e) => { if (e.target === popup) closePopup(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && popup.classList.contains("open")) closePopup(); });
+
+  document.querySelectorAll('input[name="pengaduan"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+      selectedPengaduan = radio.value;
+      modalNote.classList.remove("show");
+    });
+  });
+
+  document.getElementById("btnLanjutPengaduan").addEventListener("click", () => {
+    if (!selectedPengaduan){
+      modalNote.classList.add("show");
+      return;
+    }
+    document.getElementById("jenisPengaduan").value = selectedPengaduan;
+    closePopup();
+    const formSection = document.getElementById("formPengaduan");
+    formSection.classList.remove("hidden");
+    formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  /* ============ VALIDASI SEDERHANA ============ */
+  function markError(group, hasError){
+    group.classList.toggle("error", hasError);
+  }
+  function validateForm(form){
+    let valid = true;
+    form.querySelectorAll(".input-group[data-field]").forEach(group => {
+      const field = group.querySelector("input, textarea, select");
+      if (!field) return;
+      let hasError = false;
+      if (field.hasAttribute("required") && !field.value.trim()) hasError = true;
+      if (field.type === "email" && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) hasError = true;
+      markError(group, hasError);
+      if (hasError) valid = false;
+    });
+    return valid;
+  }
+
+  /* ============ SUKSES + STATUS ============ */
+  function showSuccess({ subtitle, text }){
+    document.getElementById("successSubtitle").textContent = subtitle;
+    document.getElementById("successText").textContent = text;
+    document.getElementById("successSection").classList.remove("hidden");
+    document.getElementById("statusSection").classList.remove("hidden");
+    document.getElementById("successSection").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  /* ============ FORM PENGADUAN ============ */
+  document.getElementById("pengaduanForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!validateForm(e.target)){
+      e.target.querySelector(".input-group.error input, .input-group.error textarea, .input-group.error select")?.focus();
+      return;
+    }
+    document.getElementById("formPengaduan").classList.add("hidden");
+    showSuccess({
+      subtitle: "Pengaduan Berhasil Dikirim",
+      text: `Terima kasih telah melaporkan kendala "${selectedPengaduan}" kepada CWM Channel. Tim teknis kami akan segera menghubungi Anda melalui WhatsApp.`
+    });
+  });
+</script>
+
+</body>
+</html>

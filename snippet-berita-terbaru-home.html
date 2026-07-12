@@ -1,0 +1,145 @@
+<!-- =====================================================
+     CARA PAKAI DI index.html
+     1. Sebelum tag </head>, tambahkan CSS di bawah (atau taruh di file CSS utama).
+     2. Taruh potongan <section class="home-berita"> di body index.html,
+        di posisi yang diinginkan (misalnya setelah bagian Hero).
+     3. Sebelum tag </body>, tambahkan:
+          <script src="berita-data.js"></script>
+          <script src="home-berita.js"></script>   (atau taruh JS-nya langsung di index.html)
+     File berita-data.js HARUS ada di folder yang sama dengan index.html.
+===================================================== -->
+
+<!-- ============ CSS (taruh di dalam <style> index.html) ============ -->
+<style>
+  .home-berita{
+    background: #f8f9fc;
+    padding: 64px 0;
+  }
+  .home-berita .container{
+    width:100%;
+    max-width:1160px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  .home-berita .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .home-berita .section-head p.eyebrow{
+    font-family:"Poppins", sans-serif;
+    font-size:0.75rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#0b3d91;
+    margin:0 0 8px;
+  }
+  .home-berita .section-head h2{
+    font-family:"Montserrat", sans-serif;
+    font-size:1.9rem;
+    margin:0;
+    color:#0b3d91;
+  }
+  .home-berita .see-all{
+    font-weight:700;
+    color:#0b3d91;
+    border-bottom:2px solid #0b3d91;
+    padding-bottom:2px;
+    font-size:0.92rem;
+  }
+  .home-berita-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  .home-berita-card{
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(11,61,145,0.08);
+    text-decoration:none;
+    color:inherit;
+    display:flex;
+    flex-direction:column;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .home-berita-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 30px rgba(11,61,145,0.14);
+  }
+  .home-berita-card img{ width:100%; height:170px; object-fit:cover; display:block; }
+  .home-berita-card .body{ padding:18px 20px 22px; }
+  .home-berita-card .tag{
+    display:inline-block;
+    font-family:"Poppins", sans-serif;
+    font-size:0.68rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:#0b3d91;
+    background:rgba(11,61,145,0.25);
+    border:1px solid rgba(11,61,145,0.6);
+    padding:3px 9px;
+    border-radius:6px;
+    margin-bottom:10px;
+  }
+  .home-berita-card h3{
+    font-family:"Montserrat", sans-serif;
+    font-size:1.05rem;
+    line-height:1.3;
+    margin:0 0 10px;
+    color:#1C1C1C;
+  }
+  .home-berita-card p{
+    font-size:0.85rem;
+    color:#6B7280;
+    margin:0 0 14px;
+  }
+  .home-berita-card .date{
+    font-family:"Poppins", sans-serif;
+    font-size:0.72rem;
+    color:#6B7280;
+  }
+  @media (max-width:900px){
+    .home-berita-grid{ grid-template-columns:1fr; }
+  }
+</style>
+
+<!-- ============ HTML (taruh di dalam <body> index.html) ============ -->
+<section class="home-berita">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Kabar Terkini</p>
+        <h2>Berita Terbaru</h2>
+      </div>
+      <a class="see-all" href="berita.html">Lihat Semua Berita &rarr;</a>
+    </div>
+    <div class="home-berita-grid" id="homeBeritaGrid">
+      <!-- diisi otomatis oleh JavaScript dari berita-data.js -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ JS (taruh sebelum </body>, setelah berita-data.js) ============ -->
+<script>
+  (function renderHomeBerita(){
+    const grid = document.getElementById("homeBeritaGrid");
+    if (!grid || typeof getBeritaTerbaru !== "function") return;
+
+    const terbaru = getBeritaTerbaru(3);
+    grid.innerHTML = terbaru.map(b => `
+      <a class="home-berita-card" href="berita.html">
+        <img src="${b.gambar}" alt="${b.judul}">
+        <div class="body">
+          <span class="tag">${b.kategori}</span>
+          <h3>${b.judul}</h3>
+          <p>${b.ringkasan}</p>
+          <span class="date">${formatTanggalID(b.tanggal)}</span>
+        </div>
+      </a>`).join("");
+  })();
+</script>

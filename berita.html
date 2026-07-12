@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berita - CWM Channel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0b3d91;
+    --navy-deep: #072a66;
+    --steel: #1856c9;
+    --amber: #0b3d91;
+    --amber-deep: #072a66;
+    --cream: #f8f9fc;
+    --paper: #FFFFFF;
+    --ink: #1C1C1C;
+    --muted: #6B7280;
+    --line: #E3DFD4;
+    --radius: 10px;
+    --shadow: 0 8px 24px rgba(11,61,145,0.08);
+    --font-display: "Montserrat", sans-serif;
+    --font-body: "Poppins", sans-serif;
+    --font-mono: "Poppins", sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; margin:0; padding:0; }
+  .container{
+    width: 100%;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  :focus-visible{
+    outline: 3px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  /* ============ HEADER (sama seperti index.html) ============ */
+  .header{
+    background: var(--navy);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+  .header-container{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:16px;
+    padding-bottom:16px;
+  }
+  .brand a{
+    font-family: var(--font-display);
+    font-weight:700;
+    font-size:1.4rem;
+    color:#fff;
+    letter-spacing:0.5px;
+  }
+  .navbar ul{
+    display:flex;
+    gap:8px;
+  }
+  .navbar a{
+    display:inline-block;
+    padding:8px 16px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:0.92rem;
+    color:rgba(255,255,255,0.75);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .navbar a:hover{ color:#fff; background:rgba(255,255,255,0.08); }
+  .navbar a.active{ color: #fff; background: var(--amber); }
+
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:1px solid rgba(255,255,255,0.3);
+    border-radius:8px;
+    width:42px; height:38px;
+    color:#fff;
+    font-size:1.2rem;
+    cursor:pointer;
+  }
+
+  /* ============ TICKER (sentuhan "channel" berita berjalan) ============ */
+  .ticker{
+    background: var(--cream);
+    color: var(--navy);
+    overflow:hidden;
+    white-space:nowrap;
+    position:relative;
+  }
+  .ticker-inner{
+    display:inline-flex;
+    align-items:center;
+    padding:8px 0;
+    animation: scroll-ticker 28s linear infinite;
+  }
+  .ticker-inner span{
+    font-family: var(--font-mono);
+    font-size:0.78rem;
+    font-weight:600;
+    letter-spacing:0.3px;
+    margin-right:48px;
+    text-transform:uppercase;
+  }
+  .ticker-label{
+    position:absolute;
+    left:0; top:0; bottom:0;
+    background: var(--navy-deep);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    padding:0 14px;
+    font-family: var(--font-mono);
+    font-size:0.72rem;
+    font-weight:600;
+    letter-spacing:1px;
+    z-index:2;
+  }
+  .ticker-inner{ padding-left:150px; }
+  @keyframes scroll-ticker{
+    0%{ transform: translateX(0); }
+    100%{ transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-inner{ animation: none; }
+  }
+
+  /* ============ HERO ============ */
+  .berita-hero{
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:#fff;
+    padding: 56px 0 48px;
+  }
+  .hero-eyebrow{
+    font-family: var(--font-mono);
+    font-size:0.78rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color: #cfe0ff;
+    margin:0 0 14px;
+  }
+  .berita-hero h1{
+    font-family: var(--font-display);
+    font-weight:600;
+    font-size: clamp(2rem, 4vw, 2.9rem);
+    margin:0 0 14px;
+    max-width: 640px;
+  }
+  .berita-hero p{
+    color: rgba(255,255,255,0.75);
+    max-width: 540px;
+    margin:0 0 28px;
+    font-size:1rem;
+  }
+  .search-box{
+    display:flex;
+    max-width: 460px;
+    background:#fff;
+    border-radius: 999px;
+    padding:4px;
+    box-shadow: var(--shadow);
+  }
+  .search-box input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    padding:10px 18px;
+    font-family: var(--font-body);
+    font-size:0.95rem;
+  }
+  .search-box button{
+    border:none;
+    background: var(--amber);
+    color: #fff;
+    font-weight:700;
+    padding:10px 22px;
+    border-radius: 999px;
+    cursor:pointer;
+    font-size:0.9rem;
+    transition: background 0.2s ease;
+  }
+  .search-box button:hover{ background: var(--amber-deep); }
+
+  /* ============ FILTER CHIPS ============ */
+  .berita-filter{
+    background: var(--paper);
+    border-bottom:1px solid var(--line);
+    position: sticky;
+    top: 70px;
+    z-index: 40;
+  }
+  .filter-row{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding: 16px 0;
+    scrollbar-width: none;
+  }
+  .filter-row::-webkit-scrollbar{ display:none; }
+  .chip{
+    flex:0 0 auto;
+    border:1px solid var(--line);
+    background:#fff;
+    color: var(--navy);
+    font-family: var(--font-mono);
+    font-size:0.78rem;
+    font-weight:600;
+    letter-spacing:0.4px;
+    text-transform:uppercase;
+    padding:8px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    transition: all 0.2s ease;
+  }
+  .chip:hover{ border-color: var(--amber); }
+  .chip.active{
+    background: var(--navy);
+    border-color: var(--navy);
+    color:#fff;
+  }
+
+  /* ============ LAYOUT ============ */
+  .berita-layout{
+    display:grid;
+    grid-template-columns: 1fr 300px;
+    gap: 40px;
+    padding: 40px 0 64px;
+    align-items:start;
+  }
+  .section-heading{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .section-heading h2{
+    font-family: var(--font-display);
+    font-size:1.3rem;
+    margin:0;
+  }
+  .result-count{
+    font-family: var(--font-mono);
+    font-size:0.78rem;
+    color: var(--muted);
+  }
+
+  /* Featured article */
+  .featured-card{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap:0;
+    background:#fff;
+    border-radius: var(--radius);
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 36px;
+    cursor:pointer;
+  }
+  .featured-card img{ height:100%; object-fit:cover; min-height:260px; }
+  .featured-body{ padding: 28px 30px; display:flex; flex-direction:column; }
+  .tag{
+    display:inline-block;
+    align-self:flex-start;
+    font-family: var(--font-mono);
+    font-size:0.7rem;
+    font-weight:600;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+    color: var(--navy-deep);
+    background: rgba(11,61,145,0.25);
+    border:1px solid rgba(11,61,145,0.6);
+    padding:4px 10px;
+    border-radius:6px;
+    margin-bottom:14px;
+  }
+  .featured-body h3{
+    font-family: var(--font-display);
+    font-size:1.55rem;
+    line-height:1.25;
+    margin:0 0 12px;
+  }
+  .featured-body p{
+    color: var(--muted);
+    font-size:0.95rem;
+    margin:0 0 18px;
+  }
+  .meta-row{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family: var(--font-mono);
+    font-size:0.75rem;
+    color: var(--muted);
+  }
+  .read-more{
+    font-weight:700;
+    color: var(--navy);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .featured-card:hover .read-more{ color: var(--amber-deep); }
+
+  /* Grid of articles */
+  .berita-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card{
+    background:#fff;
+    border-radius: var(--radius);
+    overflow:hidden;
+    box-shadow: var(--shadow);
+    display:flex;
+    flex-direction:column;
+    cursor:pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(11,61,145,0.14);
+  }
+  .card img{ height:170px; object-fit:cover; }
+  .card-body{ padding:18px 20px 20px; display:flex; flex-direction:column; flex:1; }
+  .card-body h3{
+    font-family: var(--font-display);
+    font-size:1.08rem;
+    line-height:1.3;
+    margin: 0 0 10px;
+  }
+  .card-body p{
+    color: var(--muted);
+    font-size:0.87rem;
+    margin:0 0 16px;
+    flex:1;
+  }
+  .empty-state{
+    grid-column: 1 / -1;
+    text-align:center;
+    padding: 48px 20px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size:0.9rem;
+    background:#fff;
+    border-radius: var(--radius);
+    border:1px dashed var(--line);
+  }
+
+  /* Pagination */
+  .pagination{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top: 36px;
+  }
+  .pagination button{
+    width:38px; height:38px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#fff;
+    font-family: var(--font-mono);
+    font-weight:600;
+    cursor:pointer;
+    color: var(--navy);
+  }
+  .pagination button.active{
+    background: var(--navy);
+    border-color: var(--navy);
+    color:#fff;
+  }
+  .pagination button:hover:not(.active){ border-color: var(--amber); }
+
+  /* Sidebar */
+  .sidebar-box{
+    background:#fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .sidebar-box h3{
+    font-family: var(--font-display);
+    font-size:1.1rem;
+    margin:0 0 18px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+  }
+  .popular-item{
+    display:flex;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .popular-item:last-child{ border-bottom:none; padding-bottom:0; }
+  .popular-item .num{
+    font-family: var(--font-display);
+    font-size:1.5rem;
+    font-weight:600;
+    color: var(--amber);
+    width:26px;
+    flex:0 0 auto;
+  }
+  .popular-item h4{
+    margin:0 0 6px;
+    font-size:0.9rem;
+    line-height:1.35;
+  }
+  .popular-item span{
+    font-family: var(--font-mono);
+    font-size:0.72rem;
+    color: var(--muted);
+  }
+  .newsletter-box{
+    background: var(--navy);
+    color:#fff;
+  }
+  .newsletter-box h3{ border-color: rgba(255,255,255,0.2); color:#fff; }
+  .newsletter-box p{ color: rgba(255,255,255,0.7); font-size:0.85rem; margin:0 0 16px; }
+  .newsletter-box form{ display:flex; flex-direction:column; gap:10px; }
+  .newsletter-box input{
+    padding:10px 14px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08);
+    color:#fff;
+    font-family: var(--font-body);
+    font-size:0.88rem;
+  }
+  .newsletter-box input::placeholder{ color: rgba(255,255,255,0.5); }
+  .newsletter-box button{
+    padding:10px 14px;
+    border-radius:8px;
+    border:none;
+    background: var(--amber);
+    color: #fff;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .newsletter-box button:hover{ background: var(--amber-deep); }
+  .form-note{
+    font-family: var(--font-mono);
+    font-size:0.72rem;
+    color: #cfe0ff;
+    margin-top:8px;
+    display:none;
+  }
+
+  /* ============ MODAL DETAIL BERITA ============ */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(7,42,102,0.55);
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding: 40px 20px;
+    overflow-y:auto;
+    z-index: 100;
+  }
+  .modal-overlay.open{ display:flex; }
+  .modal-box{
+    background:#fff;
+    max-width: 720px;
+    width:100%;
+    border-radius: var(--radius);
+    overflow:hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  }
+  .modal-box img{ width:100%; height:320px; object-fit:cover; }
+  .modal-content{ padding: 30px 34px 36px; }
+  .modal-close{
+    float:right;
+    background: var(--cream);
+    border:1px solid var(--line);
+    width:34px; height:34px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:1rem;
+    line-height:1;
+  }
+  .modal-content h2{
+    font-family: var(--font-display);
+    font-size:1.6rem;
+    line-height:1.3;
+    margin: 4px 0 14px;
+    clear:both;
+  }
+  .modal-meta{
+    font-family: var(--font-mono);
+    font-size:0.78rem;
+    color: var(--muted);
+    margin-bottom:20px;
+    display:flex;
+    gap:14px;
+  }
+  .modal-content p.body-text{
+    color:#333;
+    font-size:0.98rem;
+  }
+
+  /* ============ FOOTER ============ */
+  .footer{
+    background: var(--navy-deep);
+    color: rgba(255,255,255,0.65);
+    padding: 36px 0;
+    margin-top: 20px;
+  }
+  .footer-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .footer-container strong{ color:#fff; }
+  .footer-links{ display:flex; gap:20px; }
+  .footer-links a{ font-size:0.85rem; }
+  .footer-links a:hover{ color: var(--amber); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 960px){
+    .berita-layout{ grid-template-columns: 1fr; }
+    .berita-grid{ grid-template-columns: repeat(2, 1fr); }
+    .featured-card{ grid-template-columns: 1fr; }
+    .featured-card img{ min-height:200px; }
+  }
+  @media (max-width: 680px){
+    .navbar{
+      position:absolute;
+      top:100%; left:0; right:0;
+      background: var(--navy);
+      display:none;
+      flex-direction:column;
+      padding: 8px 24px 20px;
+    }
+    .navbar.open{ display:flex; }
+    .navbar ul{ flex-direction:column; gap:4px; }
+    .navbar a{ display:block; }
+    .nav-toggle{ display:block; }
+    .berita-filter{ top:64px; }
+    .berita-grid{ grid-template-columns: 1fr; }
+    .footer-container{ flex-direction:column; text-align:center; }
+  }
+</style>
+</head>
+
+<body>
+<!-- ================================================= -->
+<!-- HEADER -->
+<!-- ================================================= -->
+
+<header class="header">
+    <div class="container header-container">
+
+        <!-- BRAND -->
+        <div class="brand">
+            <a href="index.html">
+                CWM CHANNEL
+            </a>
+        </div>
+
+        <!-- NAVBAR -->
+        <nav class="navbar" id="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profil.html">Profil</a></li>
+                <li><a class="active" href="berita.html">Berita</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="pengaduan.html">Pengaduan</a></li>
+            </ul>
+        </nav>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi">&#9776;</button>
+
+    </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">Terkini</div>
+  <div class="ticker-inner" id="tickerInner"></div>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="berita-hero">
+    <div class="container">
+      <p class="hero-eyebrow">Ruang Informasi CWM Channel</p>
+      <h1>Berita &amp; Kabar Terbaru</h1>
+      <p>Kumpulan informasi, kegiatan, dan pengumuman resmi seputar CWM Channel serta lingkungan sekitar.</p>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Cari judul berita...">
+        <button type="button" id="searchBtn">Cari</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER -->
+  <section class="berita-filter">
+    <div class="container">
+      <div class="filter-row" id="filterRow"></div>
+    </div>
+  </section>
+
+  <!-- KONTEN -->
+  <div class="container">
+    <div class="berita-layout">
+
+      <div class="berita-main">
+
+        <div id="featuredWrap"></div>
+
+        <div class="section-heading">
+          <h2>Semua Berita</h2>
+          <span class="result-count" id="resultCount"></span>
+        </div>
+
+        <div class="berita-grid" id="beritaGrid"></div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <aside class="berita-sidebar">
+        <div class="sidebar-box">
+          <h3>Berita Populer</h3>
+          <ul id="popularList"></ul>
+        </div>
+
+        <div class="sidebar-box newsletter-box">
+          <h3>Langganan Info</h3>
+          <p>Dapatkan info kegiatan CWM Channel langsung ke email Anda.</p>
+          <form id="newsletterForm">
+            <input type="email" required placeholder="Alamat email">
+            <button type="submit">Langganan</button>
+          </form>
+          <p class="form-note" id="formNote">Terima kasih, Anda berhasil berlangganan.</p>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</main>
+
+<!-- MODAL DETAIL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <img id="modalImg" src="" alt="">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Tutup">&times;</button>
+      <span class="tag" id="modalTag"></span>
+      <h2 id="modalTitle"></h2>
+      <div class="modal-meta">
+        <span id="modalDate"></span>
+        <span id="modalAuthor"></span>
+      </div>
+      <p class="body-text" id="modalBody"></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-container">
+    <div><strong>CWM CHANNEL</strong> &mdash; Informasi warga, tersampaikan.</div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="profil.html">Profil</a>
+      <a href="layanan.html">Layanan</a>
+      <a href="pengaduan.html">Pengaduan</a>
+    </div>
+  </div>
+</footer>
+
+<script src="berita-data.js"></script>
+<script>
+  /* ============ STATE ============ */
+  let activeCategory = "Semua";
+  let searchTerm = "";
+  let currentPage = 1;
+  const PAGE_SIZE = 6;
+
+  const dataSorted = () =>
+    [...BERITA_DATA].sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal));
+
+  /* ============ NAV TOGGLE (mobile) ============ */
+  document.getElementById("navToggle").addEventListener("click", () => {
+    document.getElementById("navbar").classList.toggle("open");
+  });
+
+  /* ============ TICKER ============ */
+  function renderTicker(){
+    const items = dataSorted().slice(0, 6);
+    const html = items.map(b => `<span>${b.judul}</span>`).join("");
+    document.getElementById("tickerInner").innerHTML = html + html; // digandakan agar loop mulus
+  }
+
+  /* ============ FILTER CHIPS ============ */
+  function renderFilters(){
+    const kategori = ["Semua", ...new Set(BERITA_DATA.map(b => b.kategori))];
+    const row = document.getElementById("filterRow");
+    row.innerHTML = kategori.map(k =>
+      `<button class="chip ${k === activeCategory ? "active" : ""}" data-cat="${k}">${k}</button>`
+    ).join("");
+    row.querySelectorAll(".chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCategory = btn.dataset.cat;
+        currentPage = 1;
+        renderFilters();
+        renderAll();
+      });
+    });
+  }
+
+  /* ============ FEATURED ============ */
+  function renderFeatured(list){
+    const wrap = document.getElementById("featuredWrap");
+    if (!list.length){ wrap.innerHTML = ""; return; }
+    const f = list[0];
+    wrap.innerHTML = `
+      <article class="featured-card" data-id="${f.id}">
+        <img src="${f.gambar}" alt="${f.judul}">
+        <div class="featured-body">
+          <span class="tag">${f.kategori}</span>
+          <h3>${f.judul}</h3>
+          <p>${f.ringkasan}</p>
+          <div class="meta-row">
+            <span>${formatTanggalID(f.tanggal)}</span>
+            <span>&middot;</span>
+            <span>${f.penulis}</span>
+            <span class="read-more" style="margin-left:auto;">Baca selengkapnya &rarr;</span>
+          </div>
+        </div>
+      </article>`;
+    wrap.querySelector(".featured-card").addEventListener("click", () => openModal(f.id));
+  }
+
+  /* ============ GRID + PAGINATION ============ */
+  function getFiltered(){
+    return dataSorted().filter(b => {
+      const matchCat = activeCategory === "Semua" || b.kategori === activeCategory;
+      const matchSearch = b.judul.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchCat && matchSearch;
+    });
+  }
+
+  function renderGrid(){
+    const filtered = getFiltered();
+    document.getElementById("resultCount").textContent = `${filtered.length} berita`;
+
+    // featured = item pertama hasil filter, grid = sisanya
+    renderFeatured(filtered);
+    const rest = filtered.slice(1);
+
+    const totalPages = Math.max(1, Math.ceil(rest.length / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageItems = rest.slice(start, start + PAGE_SIZE);
+
+    const grid = document.getElementById("beritaGrid");
+    if (!pageItems.length){
+      grid.innerHTML = `<div class="empty-state">Tidak ada berita yang cocok dengan pencarian Anda.</div>`;
+    } else {
+      grid.innerHTML = pageItems.map(b => `
+        <article class="card" data-id="${b.id}">
+          <img src="${b.gambar}" alt="${b.judul}">
+          <div class="card-body">
+            <span class="tag">${b.kategori}</span>
+            <h3>${b.judul}</h3>
+            <p>${b.ringkasan}</p>
+            <div class="meta-row">
+              <span>${formatTanggalID(b.tanggal)}</span>
+            </div>
+          </div>
+        </article>`).join("");
+      grid.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("click", () => openModal(Number(card.dataset.id)));
+      });
+    }
+
+    renderPagination(totalPages);
+  }
+
+  function renderPagination(totalPages){
+    const el = document.getElementById("pagination");
+    if (totalPages <= 1){ el.innerHTML = ""; return; }
+    let html = "";
+    for (let i = 1; i <= totalPages; i++){
+      html += `<button class="${i === currentPage ? "active" : ""}" data-page="${i}">${i}</button>`;
+    }
+    el.innerHTML = html;
+    el.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentPage = Number(btn.dataset.page);
+        renderGrid();
+        window.scrollTo({ top: document.querySelector(".berita-filter").offsetTop, behavior: "smooth" });
+      });
+    });
+  }
+
+  /* ============ POPULAR SIDEBAR ============ */
+  function renderPopular(){
+    const items = dataSorted().slice(0, 4);
+    document.getElementById("popularList").innerHTML = items.map((b, i) => `
+      <li class="popular-item" data-id="${b.id}">
+        <span class="num">${String(i + 1).padStart(2, "0")}</span>
+        <div>
+          <h4>${b.judul}</h4>
+          <span>${formatTanggalID(b.tanggal)}</span>
+        </div>
+      </li>`).join("");
+    document.querySelectorAll(".popular-item").forEach(item => {
+      item.addEventListener("click", () => openModal(Number(item.dataset.id)));
+    });
+  }
+
+  /* ============ MODAL ============ */
+  function openModal(id){
+    const b = BERITA_DATA.find(x => x.id === id);
+    if (!b) return;
+    document.getElementById("modalImg").src = b.gambar;
+    document.getElementById("modalImg").alt = b.judul;
+    document.getElementById("modalTag").textContent = b.kategori;
+    document.getElementById("modalTitle").textContent = b.judul;
+    document.getElementById("modalDate").textContent = formatTanggalID(b.tanggal);
+    document.getElementById("modalAuthor").textContent = "Oleh " + b.penulis;
+    document.getElementById("modalBody").textContent = b.isi;
+    document.getElementById("modalOverlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeModal(){
+    document.getElementById("modalOverlay").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  document.getElementById("modalClose").addEventListener("click", closeModal);
+  document.getElementById("modalOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "modalOverlay") closeModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+
+  /* ============ SEARCH ============ */
+  document.getElementById("searchBtn").addEventListener("click", doSearch);
+  document.getElementById("searchInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") doSearch();
+  });
+  function doSearch(){
+    searchTerm = document.getElementById("searchInput").value.trim();
+    currentPage = 1;
+    renderGrid();
+  }
+
+  /* ============ NEWSLETTER (demo, tanpa backend) ============ */
+  document.getElementById("newsletterForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const note = document.getElementById("formNote");
+    note.style.display = "block";
+    e.target.reset();
+    setTimeout(() => { note.style.display = "none"; }, 4000);
+  });
+
+  /* ============ INIT ============ */
+  function renderAll(){
+    renderGrid();
+  }
+  renderTicker();
+  renderFilters();
+  renderPopular();
+  renderAll();
+</script>
+
+</body>
+</html>

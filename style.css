@@ -1,0 +1,1430 @@
+/*=========================================================
+CWM NEWS PORTAL
+style.css
+BAGIAN 1
+Header + Navbar + Weather + BMKG + Live TV
+=========================================================*/
+
+/*========================
+RESET
+=========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    background:#f5f7fb;
+    color:#222;
+    overflow-x:hidden;
+
+}
+
+img{
+
+    max-width:100%;
+    display:block;
+
+}
+
+a{
+
+    text-decoration:none;
+    color:inherit;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+.container{
+
+    width:90%;
+    max-width:1400px;
+    margin:auto;
+
+}
+
+/*========================
+HEADER
+=========================*/
+/* ==========================
+   HEADER
+========================== */
+
+.header{
+    width:100%;
+    background:#0b3d91;      /* Samakan dengan warna navbar */
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 10px rgb(4, 31, 112);
+}
+
+.header-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height:75px;
+}
+
+/* ==========================
+   BRAND
+========================== */
+
+.brand a{
+    font-family:'Montserrat', sans-serif;
+    font-size:30px;
+    font-weight:800;
+    color:#ffffff;
+    text-decoration:none;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    transition:.3s ease;
+}
+
+.brand a:hover{
+    color:#FFD54F;
+}
+
+
+/*========================
+LOGO
+=========================*/
+
+.logo img{
+
+    width:170px;
+    transition:.3s;
+
+}
+
+.logo img:hover{
+
+    transform:scale(1.04);
+
+}
+/*=================================================
+HEADER WEATHER
+=================================================*/
+
+
+.header-container{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:40px;
+
+}
+
+
+
+
+
+.header-weather{
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    gap:15px;
+
+
+    background:
+
+
+    linear-gradient(
+
+    135deg,
+
+    #eaf4ff,
+
+    #ffffff
+
+    );
+
+
+    padding:
+
+    12px 25px;
+
+
+    border-radius:20px;
+
+
+    border:
+
+    1px solid #dbeafe;
+
+
+    box-shadow:
+
+
+    0 8px 20px rgba(0,102,204,.08);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+.header-weather:hover{
+
+
+    transform:
+
+
+    translateY(-5px);
+
+
+    box-shadow:
+
+
+    0 15px 30px rgba(0,102,204,.15);
+
+
+}
+
+
+
+
+
+.weather-icon{
+
+
+    font-size:40px;
+
+
+    animation:
+
+
+    floatingWeather 3s infinite;
+
+
+}
+
+
+
+
+
+.weather-info h4{
+
+
+    margin:0;
+
+
+    color:#003566;
+
+
+    font-size:16px;
+
+
+}
+
+
+
+
+
+.weather-info p{
+
+
+    margin:5px 0 0;
+
+
+    color:#64748b;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+.weather-info span{
+
+
+    font-weight:700;
+
+
+    color:#0066cc;
+
+
+    margin:0 8px;
+
+
+}
+
+
+
+
+
+@keyframes floatingWeather{
+
+
+    0%,100%{
+
+        transform:translateY(0);
+
+    }
+
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+}
+
+
+/*========================
+SEARCH RESULT
+=========================*/
+
+.search-result{
+
+    position:absolute;
+
+    width:100%;
+
+    top:60px;
+
+    left:0;
+
+    background:#fff;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    display:none;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+}
+
+.search-item{
+
+    padding:15px 20px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    font-size:15px;
+
+}
+
+.search-item:hover{
+
+    background:#f0f6ff;
+
+    color:#0d6efd;
+
+}
+
+.search-item i{
+
+    position:static;
+
+}
+
+/*========================
+NAVBAR
+=========================*/
+
+.navbar{
+
+    background:#0b3d91;
+
+}
+
+.navbar ul{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:45px;
+
+}
+
+.navbar li{
+
+    position:relative;
+
+}
+
+.navbar a{
+
+    display:block;
+
+    color:#fff;
+
+    padding:18px 0;
+
+    font-size:15px;
+
+    font-weight:500;
+
+    transition:.3s;
+
+}
+
+.navbar a::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:0;
+
+    left:0;
+
+    bottom:0;
+
+    height:3px;
+
+    background:#25a8ff;
+
+    transition:.35s;
+
+}
+
+.navbar a:hover::after{
+
+    width:100%;
+
+}
+
+.navbar a:hover{
+
+    color:#fff;
+
+}
+
+.active::after{
+
+    width:100% !important;
+
+}
+
+/*========================
+INFO CUACA
+=========================*/
+
+.weather{
+
+    background:#ffffff;
+
+    margin-top:15px;
+
+    border-radius:12px;
+
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+
+}
+
+.weather-container{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:14px 20px;
+
+}
+
+.weather-title{
+
+    font-weight:600;
+
+    color:#0b3d91;
+
+    white-space:nowrap;
+
+}
+
+.weather marquee{
+
+    font-size:15px;
+
+    color:#555;
+
+}
+
+/*========================
+BMKG
+=========================*/
+
+.bmkg{
+
+    margin-top:18px;
+
+}
+
+.bmkg-box{
+
+    padding:18px 22px;
+
+    border-radius:12px;
+
+    color:#fff;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    font-size:15px;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+.bmkg-box.warning{
+
+    background:#d62d20;
+
+}
+
+.bmkg-box.success{
+
+    background:#0b9444;
+
+}
+
+.bmkg-box span{
+
+    margin-left:auto;
+
+    font-weight:600;
+
+}
+
+.bmkg-box small{
+
+    background:rgba(255,255,255,.2);
+
+    padding:5px 12px;
+
+    border-radius:30px;
+
+}
+
+/*========================
+LIVE TV
+=========================*/
+
+.live-program{
+
+    margin-top:35px;
+
+}
+
+.live-grid{
+
+    display:grid;
+
+    grid-template-columns:70% 30%;
+
+    gap:30px;
+
+}
+
+/*========================
+SECTION TITLE
+=========================*/
+
+.section-title{
+
+    font-size:20px;
+
+    font-weight:600;
+
+    margin-bottom:18px;
+
+    color:#0b3d91;
+
+}
+
+/*========================
+LIVE PLAYER
+=========================*/
+
+.live-player{
+
+    background:#000;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.live-player iframe{
+
+    width:100%;
+
+    height:560px;
+
+    border:none;
+
+}
+
+/*========================
+PROGRAM TV
+=========================*/
+
+.program-tv{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+}
+
+.program-scroll{
+
+    height:560px;
+
+    overflow-y:auto;
+
+    padding-right:5px;
+
+}
+
+.program-scroll::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+.program-scroll::-webkit-scrollbar-thumb{
+
+    background:#0b3d91;
+
+    border-radius:30px;
+
+}
+
+.program-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px;
+
+    border-radius:10px;
+
+    margin-bottom:12px;
+
+    background:#f5f7fb;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.program-item:hover{
+
+    background:#0b3d91;
+
+    color:#fff;
+
+    transform:translateX(5px);
+
+}
+
+.program-item span{
+
+    color:#0b3d91;
+
+    font-weight:700;
+
+}
+
+.program-item:hover span{
+
+    color:#fff;
+
+}
+/*=========================================================
+CWM NEWS PORTAL
+style.css
+BAGIAN 2
+Trend Global + Berita + Footer + Responsive
+=========================================================*/
+
+
+/*=================================================
+SECTION HEADER
+=================================================*/
+
+.section-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+
+}
+
+.section-header h2{
+
+    font-size:28px;
+    color:#0b3d91;
+    font-weight:700;
+
+}
+
+.section-header a{
+
+    color:#0b3d91;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+
+}
+
+.section-header a:hover{
+
+    color:#1d7dff;
+
+}
+
+
+/*=================================================
+TREND GLOBAL
+=================================================*/
+
+.trend-global{
+
+    margin-top:60px;
+    margin-bottom:60px;
+
+}
+
+.trend-card{
+
+    background:#ffffff;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.trend-top{
+
+    margin-bottom:30px;
+
+}
+
+.trend-title{
+
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+}
+
+.trend-title img{
+
+    width:70px;
+    height:70px;
+    object-fit:contain;
+
+}
+
+.trend-title h3{
+
+    font-size:24px;
+    color:#0b3d91;
+    margin-bottom:5px;
+
+}
+
+.trend-title span{
+
+    color:#777;
+    font-size:14px;
+
+}
+
+.trend-grid{
+
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:20px;
+
+}
+
+.trend-item{
+
+    background:#f7f9fc;
+    border-radius:15px;
+    text-align:center;
+    padding:30px 15px;
+    transition:.35s;
+
+}
+
+.trend-item:hover{
+
+    background:#0b3d91;
+    color:#ffffff;
+    transform:translateY(-8px);
+
+}
+
+.trend-item i{
+
+    font-size:32px;
+    margin-bottom:15px;
+    display:block;
+
+}
+
+.trend-item span{
+
+    font-size:15px;
+    font-weight:600;
+
+}
+
+
+/*=================================================
+BERITA TERBARU
+=================================================*/
+
+.latest-news{
+
+    margin-bottom:70px;
+
+}
+
+.news-grid{
+
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+
+}
+
+.news-card{
+
+    background:#ffffff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.35s;
+
+}
+
+.news-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 40px rgba(0,0,0,.15);
+
+}
+
+.news-card img{
+
+    width:100%;
+    height:240px;
+    object-fit:cover;
+
+}
+
+.news-content{
+
+    padding:25px;
+
+}
+
+.category{
+
+    display:inline-block;
+
+    background:#0b3d91;
+
+    color:#fff;
+
+    padding:6px 15px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    margin-bottom:18px;
+
+}
+
+.news-content h3{
+
+    font-size:21px;
+
+    line-height:1.5;
+
+    margin-bottom:15px;
+
+    color:#222;
+
+}
+
+.news-content p{
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+    margin-bottom:25px;
+
+}
+
+.btn-news{
+
+    display:inline-block;
+
+    background:#0b3d91;
+
+    color:#fff;
+
+    padding:13px 24px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.btn-news:hover{
+
+    background:#1d7dff;
+
+}
+
+
+/*=================================================
+FOOTER
+=================================================*/
+
+.footer{
+
+    background:#0b3d91;
+    color:#ffffff;
+    padding:55px 0 20px;
+
+}
+
+.footer-content{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+
+}
+
+.footer-company{
+
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:.5px;
+    margin-bottom:18px;
+    text-transform:uppercase;
+
+}
+
+.footer-address{
+
+    font-size:17px;
+    line-height:1.9;
+    color:rgba(255,255,255,.88);
+    margin-bottom:45px;
+    max-width:700px;
+
+}
+
+.footer-social h4{
+
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:25px;
+
+}
+
+.social-icons{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:28px;
+
+}
+
+.social-icons a{
+
+    width:60px;
+    height:60px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+
+    color:#ffffff;
+
+    font-size:25px;
+
+    transition:.35s ease;
+
+}
+
+/* Hover Facebook */
+
+.social-icons a:nth-child(1):hover{
+
+    background:#1877F2;
+    transform:translateY(-6px) scale(1.08);
+    box-shadow:0 10px 25px rgba(24,119,242,.45);
+
+}
+
+/* Hover Instagram */
+
+.social-icons a:nth-child(2):hover{
+
+    background:linear-gradient(
+        135deg,
+        #f58529,
+        #dd2a7b,
+        #8134af,
+        #515bd4
+    );
+
+    transform:translateY(-6px) scale(1.08);
+
+    box-shadow:0 10px 25px rgba(221,42,123,.45);
+
+}
+
+/* Hover Youtube */
+
+.social-icons a:nth-child(3):hover{
+
+    background:#FF0000;
+
+    transform:translateY(-6px) scale(1.08);
+
+    box-shadow:0 10px 25px rgba(255,0,0,.45);
+
+}
+
+.footer-bottom{
+
+    margin-top:45px;
+
+    padding-top:20px;
+
+    border-top:1px solid rgba(255,255,255,.15);
+
+    text-align:center;
+
+    color:rgba(255,255,255,.75);
+
+    font-size:15px;
+
+}
+
+
+/*=================================================
+ANIMATION
+=================================================*/
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+.news-card,
+.trend-card,
+.live-tv,
+.program-tv{
+
+    animation:fadeUp .7s ease;
+
+}
+
+
+/*=================================================
+RESPONSIVE
+=================================================*/
+
+@media(max-width:1200px){
+
+.trend-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+.news-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.live-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.program-scroll{
+
+height:350px;
+
+}
+
+.live-player iframe{
+
+height:450px;
+
+}
+
+}
+
+
+@media(max-width:992px){
+
+.header-container{
+
+flex-direction:column;
+
+height:auto;
+
+padding:16px 0;
+
+gap:20px;
+
+}
+
+.search-box{
+
+width:100%;
+
+}
+
+.navbar ul{
+
+flex-wrap:wrap;
+
+gap:25px;
+
+}
+
+.weather-container{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.section-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+}
+
+
+@media(max-width:768px){
+
+.header-container{
+
+height:auto;
+
+padding:14px 0;
+
+}
+
+.news-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.trend-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.live-player iframe{
+
+height:320px;
+
+}
+
+.program-scroll{
+
+height:280px;
+
+}
+
+.section-header h2{
+
+font-size:24px;
+
+}
+
+.section-title{
+
+font-size:22px;
+
+}
+/* ===========================
+   FOOTER RESPONSIVE
+=========================== */
+
+.footer-company{
+    font-size:26px;
+}
+
+.footer-address{
+    font-size:15px;
+    line-height:1.8;
+}
+
+.footer-social h4{
+    font-size:24px;
+}
+
+.social-icons{
+    gap:18px;
+}
+
+.social-icons a{
+    width:52px;
+    height:52px;
+    font-size:22px;
+}
+
+
+.footer-content{
+
+flex-direction:column;
+
+}
+
+}
+
+
+@media(max-width:576px){
+
+.container{
+
+width:95%;
+
+}
+
+.header-container{
+
+height:auto;
+
+padding:12px 0;
+
+}
+
+.logo img{
+
+width:140px;
+
+}
+
+.search-box input{
+
+height:48px;
+
+font-size:14px;
+
+}
+
+.navbar ul{
+
+gap:15px;
+
+}
+
+.navbar a{
+
+font-size:14px;
+
+}
+
+.trend-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.trend-title{
+
+flex-direction:column;
+
+text-align:center;
+
+}
+
+.trend-title img{
+
+width:60px;
+
+}
+
+.news-card img{
+
+height:200px;
+
+}
+
+/* ==========================
+   FOOTER RESPONSIVE
+========================== */
+
+.footer{
+
+padding:45px 0 18px;
+text-align:center;
+
+}
+
+.footer-company{
+
+font-size:22px;
+line-height:1.5;
+
+}
+
+.footer-address{
+
+font-size:14px;
+line-height:1.8;
+max-width:95%;
+margin-bottom:35px;
+
+}
+
+.footer-social h4{
+
+font-size:22px;
+
+}
+
+.social-icons{
+
+gap:15px;
+
+}
+
+.social-icons a{
+
+width:48px;
+height:48px;
+font-size:20px;
+
+}
+
+.footer-bottom{
+
+font-size:13px;
+
+}
+
+.market-link{
+
+display:block;
+
+text-decoration:none;
+
+color:inherit;
+
+}
+
+}
